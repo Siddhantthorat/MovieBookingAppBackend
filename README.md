@@ -1,5 +1,5 @@
 # MovieBookingAppBackend
-git token :- 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
+git token :- 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
 
 Kafka configuration and installation
 
