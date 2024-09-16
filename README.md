@@ -1,8 +1,5 @@
 # MovieBookingAppBackend
-git token :- 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
-pass:Siddhant@0712
-
-Kafka configuration and installation
+configuration and installation
 
 1.Kafka download and offset tool download
 2.Extract kafka folder and place it in c drive name it kafka folder
