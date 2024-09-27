@@ -1,54 +1,208 @@
+Here's the properly formatted content for your `README.md` file, which you can upload to GitHub for the `MovieBookingAppBackend` project.
+
+---
+
 # MovieBookingAppBackend
-configuration and installation
 
-1.Kafka download and offset tool download
-2.Extract kafka folder and place it in c drive name it kafka folder
-3.Change server.properties file in kafka/config  ############################# Log Basics #############################
-# A comma separated list of directories under which to store log files
-log.dirs=C:/kafka/kafka-logs
-make the above changes
-4.Change zookeeper.properties file in kafka/config # the directory where the snapshot is stored.
-dataDir=C:/kafka/zookeeper-data
-make above changes
-use cmd below
-5.run the zookeeper:- .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
-6.run the kafka server :- .\bin\windows\kafka-server-start.bat .\config\server.properties
-7. to create topics go to bin/windows in cmd , type >kafka-topics.bat --create --bootstrap-server localhost:9092 --topic movieapptopic
-this will create topic 
-we can alsoi add partition and replication factor(broker k clone hote hai)
+## Kafka Configuration and Installation
 
-8.>kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic movieapptopic --from-beginning   ,
-for running the consumer and read the flesfrom beginning
+### Steps:
+1. **Download Kafka and Offset Tool:**
+   - Download Kafka from [Kafka downloads](https://kafka.apache.org/downloads).
+   - Download the offset tool if needed.
 
-Note:
-Zookeeper port =2181
-Kafka server/broker =9092
+2. **Extract Kafka Folder:**
+   - Extract the Kafka folder and place it in `C:\`. Name the folder `kafka`.
 
+3. **Edit `server.properties`:**
+   - Navigate to `kafka/config/server.properties`.
+   - Update the following line for log basics:
 
-deployment in Docker , using docker desktop 
-1. create jar file by maven install or command prompt , disable test case if getting error mvn clean install -DskipTests(give finalname in pom for jar file name)
-2.write DockerFile   
-3.go to your project root directory , "build -t moviebookingapp:m1 ." ,"docker build -t moviebookingapp-image:m1 ." run this command to generate docker image  image name is moviebookingapp 
-and m1 is tag
-4.to check image by command "docker images".
-5.to run application we need to create run docker container  :docker run --name moviebookingapp-container -dp 8082:8081 moviebookingapp:m1
-docker me 8082 me run hoga or eclipse me 8081 me d bole toh detached mode me run hoga , p port no, 
-ye command container run karega or docker image bhi .
-6. how many docker container are running to check this type , "docker container ps"
-7.to check logs docker  logs  moviebookingapp-container
-8.to stop docker stop moviebookingapp-container
-9.If you want yo start container docker start moviebookingapp-container
-10 . to remove container docker rm moviebookingapp-container
+     ```properties
+     ############################# Log Basics #############################
+     log.dirs=C:/kafka/kafka-logs
+     ```
 
-11.To connect application with mongo , you can type command "docker pull mongo" or "docker pull mongo:latest"
-12.to check image by command "docker images".
-13 . Start mongodb container with specific name and port command "docker run -d --name mongodb-container -p 27017:27017 mongo"
+4. **Edit `zookeeper.properties`:**
+   - Navigate to `kafka/config/zookeeper.properties`.
+   - Update the following line for Zookeeper data directory:
 
-NOTE: # we can use profile as well for creating to seperate application properties for
-# ex: spring.profiles.active=dev for local environment
-# ex: spring.profiles.active=docker for docker environment
-#in docker while running we can specify command below
-#docker run -d -p 8082:8081 --name moviebookingapp-container -e "SPRING_PROFILE_ACTIVE=docker" moviebookingimage
+     ```properties
+     # the directory where the snapshot is stored
+     dataDir=C:/kafka/zookeeper-data
+     ```
 
-in eclipse run as configurations arguments tab add = -Dspring.profiles.active=docker
-in cmd =java -jar spring-boot-docker.jar --spring.profiles.active=docker use to run profile optional I guess because its running without it as well
+5. **Start Zookeeper:**
+   - Open a command prompt and run Zookeeper:
+
+     ```bash
+     .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+     ```
+
+6. **Start Kafka Server:**
+   - In another command prompt, start the Kafka server:
+
+     ```bash
+     .\bin\windows\kafka-server-start.bat .\config\server.properties
+     ```
+
+7. **Create Kafka Topic:**
+   - To create a topic, navigate to the `bin/windows` directory in CMD and type:
+
+     ```bash
+     kafka-topics.bat --create --bootstrap-server localhost:9092 --topic movieapptopic
+     ```
+
+   - You can also add partitions and replication factors if needed.
+
+8. **Run Kafka Consumer:**
+   - To run the consumer and read files from the beginning, use the command:
+
+     ```bash
+     kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic movieapptopic --from-beginning
+     ```
+
+### Ports:
+- **Zookeeper Port:** 2181
+- **Kafka Server/Broker:** 9092
+
+---
+
+## Deployment in Docker (Using Docker Desktop)
+
+### Steps:
+
+1. **Create JAR File:**
+   - Use Maven to install dependencies and generate the JAR file:
+
+     ```bash
+     mvn clean install -DskipTests
+     ```
+
+   - Ensure you provide the `finalName` in the `pom.xml` for the JAR file name.
+
+2. **Write Dockerfile:**
+   - In your project's root directory, create a `Dockerfile`.
+
+3. **Build Docker Image:**
+   - In your project root, run the following command to build the Docker image:
+
+     ```bash
+     docker build -t moviebookingapp-image:m1 .
+     ```
+
+4. **Check Docker Image:**
+   - Verify that the image is created by using:
+
+     ```bash
+     docker images
+     ```
+
+5. **Run Docker Container:**
+   - Run the Docker container using the command:
+
+     ```bash
+     docker run --name moviebookingapp-container -dp 8082:8081 moviebookingapp-image:m1
+     ```
+
+   - This will run the application on port `8082` in Docker and on port `8081` in Eclipse.
+
+6. **Check Running Docker Containers:**
+   - Use the following command to check running containers:
+
+     ```bash
+     docker container ps
+     ```
+
+7. **Check Docker Logs:**
+   - View logs using:
+
+     ```bash
+     docker logs moviebookingapp-container
+     ```
+
+8. **Stop Docker Container:**
+   - Stop the running container:
+
+     ```bash
+     docker stop moviebookingapp-container
+     ```
+
+9. **Start Docker Container:**
+   - Start the container again if needed:
+
+     ```bash
+     docker start moviebookingapp-container
+     ```
+
+10. **Remove Docker Container:**
+    - To remove the container, use the command:
+
+      ```bash
+      docker rm moviebookingapp-container
+      ```
+
+11. **MongoDB in Docker:**
+    - Pull the MongoDB image:
+
+      ```bash
+      docker pull mongo
+      ```
+
+    - Verify the MongoDB image:
+
+      ```bash
+      docker images
+      ```
+
+12. **Run MongoDB Container:**
+    - Start the MongoDB container with a specific name and port:
+
+      ```bash
+      docker run -d --name mongodb-container -p 27017:27017 mongo
+      ```
+
+---
+
+## Using Profiles in Docker
+
+- You can use different profiles for creating separate application properties, e.g.:
+  - For local environment:
+
+    ```properties
+    spring.profiles.active=dev
+    ```
+
+  - For Docker environment:
+
+    ```properties
+    spring.profiles.active=docker
+    ```
+
+- To specify the active profile while running in Docker, use the following command:
+
+  ```bash
+  docker run -d -p 8082:8081 --name moviebookingapp-container -e "SPRING_PROFILE_ACTIVE=docker" moviebookingapp-image
+  ```
+
+- In Eclipse, go to **Run Configurations → Arguments Tab** and add:
+
+  ```bash
+  -Dspring.profiles.active=docker
+  ```
+
+- In CMD, you can run the JAR with the profile:
+
+  ```bash
+  java -jar spring-boot-docker.jar --spring.profiles.active=docker
+  ```
+
+  This step is optional as it might run without specifying the profile as well.
+
+---
+
+This `README.md` can now be uploaded to GitHub for documentation.
+
+--- 
+
+Let me know if you need any further formatting adjustments!
